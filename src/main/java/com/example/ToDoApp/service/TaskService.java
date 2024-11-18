@@ -27,7 +27,7 @@ public class TaskService {
     public List<Task> getTasksByCompletion(boolean completed){
         return taskRepository.findByCompleted(completed);
     }
-    // Save task
+    // Save task (via Hibernate)
     public Task saveTask(Task task){
         return taskRepository.save(task);
     }
