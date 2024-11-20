@@ -39,4 +39,9 @@ public class TaskController {
     public void deleteTask(@PathVariable Long id){
         taskService.deleteTask(id);
     }
+    // Endpoint to toggle task completion
+    @PatchMapping("/{id}/toggle")
+    public Task toggleTaskCompletion(@PathVariable Long id) {
+        return taskService.toggleTaskCompletion(id);
+    }
 }

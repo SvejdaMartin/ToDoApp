@@ -34,4 +34,10 @@ public class TaskService {
     public void deleteTask(Long id){
         taskRepository.deleteById(id);
     }
+    // Method to toggle the task completion
+    public Task toggleTaskCompletion(Long taskId) {
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setCompleted(!task.isCompleted());
+        return taskRepository.save(task);
+    }
 }

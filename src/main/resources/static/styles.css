@@ -1,0 +1,86 @@
+body {
+    background: #3d3d49;
+}
+.priority-bg{
+    position: relative; /*Pseudo elementy*/
+    background-color:  #222228;
+    color: white;
+    border-radius: 15px;
+    text-align: left;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 10px 10px 10px 30px;
+}
+.priority-bg::before {
+    content: ''; /* Pseudo-element pro pruh */
+    position: absolute; /* Absolutní pozicování vůči priority-bg */
+    top: 10px;
+    left: 10px;
+    bottom: 10px;
+    /*height:calc(100% - 10px);  Výška pruhu snížená o horní a dolní odsazení */
+    width: 1.5%; /* width of stripe */
+    /*background-color: #2a56b3; /* color of stripe */
+    border-radius: 5px;
+}
+.priority-bg.all-tasks::before {
+    background-color: #2a56b3;
+}
+.priority-bg.high-priority::before {
+    background-color: #ee4266;
+}
+.priority-bg.medium-priority::before {
+    background-color: #fe7348;
+}
+.priority-bg.low-priority::before {
+    background-color: #63f4f7;
+}
+.priority-bg span {
+    display: block;
+    margin-top: 5px;
+    font-size: 15px;
+    color: #63646a;
+    margin: 0;
+}
+.btn-color{
+    background-color: #2a56b3;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 15px;
+    padding: 10px;
+}
+.btn-color:hover {
+    background-color: none;
+    border-color : white;
+    color: white;
+    transform: scale(1.01);
+}
+.card{
+    border: none;
+    background-color: #212127;
+    padding: 20px;
+    border-radius: 15px;
+}
+.card-body{
+    padding: 0;
+}
+.list-group-item{
+    color: white;
+    border: none;
+    background-color: #212127;
+}
+/*Checkbox
+input[type="checkbox"] {
+    display: none; /* Skrytí výchozího checkboxu
+}*/
+
+.completed-task {
+    text-decoration: line-through;
+    color: gray;
+}
+
+
+
