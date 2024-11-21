@@ -2,7 +2,7 @@ body {
     background: #3d3d49;
 }
 .priority-bg{
-    position: relative; /*Pseudo elementy*/
+    position: relative; /*Pseudo elements*/
     background-color:  #222228;
     color: white;
     border-radius: 15px;
@@ -14,14 +14,12 @@ body {
     padding: 10px 10px 10px 30px;
 }
 .priority-bg::before {
-    content: ''; /* Pseudo-element pro pruh */
-    position: absolute; /* Absolutní pozicování vůči priority-bg */
+    content: ''; /* Pseudo-element for style */
+    position: absolute;
     top: 10px;
     left: 10px;
     bottom: 10px;
-    /*height:calc(100% - 10px);  Výška pruhu snížená o horní a dolní odsazení */
     width: 1.5%; /* width of stripe */
-    /*background-color: #2a56b3; /* color of stripe */
     border-radius: 5px;
 }
 .priority-bg.all-tasks::before {
@@ -47,6 +45,7 @@ body {
     background-color: #2a56b3;
     color: white;
     font-weight: 500;
+    font-size: 16px;
     letter-spacing: 1px;
     text-transform: uppercase;
     border-radius: 15px;
@@ -72,11 +71,32 @@ body {
     border: none;
     background-color: #212127;
 }
-/*Checkbox
+.list-group-item div span{
+    font-size: 15px;
+}
+/*Checkbox*/
 input[type="checkbox"] {
-    display: none; /* Skrytí výchozího checkboxu
-}*/
+    /* Hide default checkbox styling */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
+    /* Own style */
+     width: 25px;
+     height: 25px;
+     margin-right: 20px;
+     border: 3px solid #2a56b3;
+     border-radius: 15px;
+     background-color: none;
+     cursor: pointer;
+     position: relative;
+     top: 6px;
+     transition: all 0.3s ease;
+}
+input[type="checkbox"]:checked {
+     background-color: none;
+     border-color: grey;
+}
 .completed-task {
     text-decoration: line-through;
     color: gray;
