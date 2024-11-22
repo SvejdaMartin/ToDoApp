@@ -3,10 +3,6 @@ function showTaskForm() {
     form.style.display = form.style.display === "none" ? "block" : "none";
 }
 
-function filterTasks(filter) {
-    alert(`Filtering tasks by: ${filter}`);
-}
-
 function addTask() {
     var taskName = document.getElementById("taskName").value;
     var taskPriority = document.getElementById("taskPriority").value;
@@ -60,59 +56,6 @@ function addTask() {
     }
 }
 
-// Načítání všech úkolů
-function loadTasks() {
-    fetch('/api/tasks')
-        .then(response => response.json())
-        .then(tasks => {
-            var taskList = document.getElementById("taskList");
-            taskList.innerHTML = ''; // Vyčistí předchozí seznam úkolů
-
-            tasks.forEach(task => {
-                var taskItem = document.createElement("li");
-                taskItem.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
-
-                // Create the checkbox
-                var checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.checked = task.completed;
-                checkbox.addEventListener("click", function () {
-                    toggleTaskCompletion(task.id, checkbox);
-                });
-
-                // Create task title with priority
-                var taskTitle = document.createElement("span");
-                taskTitle.textContent = `${task.title} - ${task.priority}`;
-
-                if (task.completed) {
-                    taskTitle.classList.add("completed-task");
-                }
-
-                // Create delete button (křížek)
-                var deleteButton = document.createElement("button");
-                deleteButton.textContent = "X"; // Symbol křížku
-                deleteButton.classList.add("delete-btn");
-
-                deleteButton.addEventListener("click", function () {
-                    deleteTask(task.id);
-                });
-
-                // Add checkbox, title, and delete button to the task item
-                var taskContent = document.createElement("div");
-                taskContent.appendChild(checkbox);
-                taskContent.appendChild(taskTitle);
-                taskItem.appendChild(taskContent);
-                taskItem.appendChild(deleteButton);
-
-                // Add task item to the list
-                taskList.appendChild(taskItem);
-            });
-        })
-        .catch(error => {
-            console.error('Chyba při načítání úkolů:', error);
-        });
-}
-
 // Mazání úkolu
 function deleteTask(taskId) {
     // Potvrzení od uživatele
@@ -130,35 +73,114 @@ function deleteTask(taskId) {
             console.error('Chyba při mazání úkolu:', error);
         });
 }
+// Uchování aktuálního filtru
+let currentFilter = 'ALL';
 
+function filterTasks(filter) {
+    currentFilter = filter;
 
-// Toggle task completion
-function toggleTaskCompletion(taskId, checkbox) {
-    // Send request to backend to toggle completion
-    fetch(`/api/tasks/${taskId}/toggle`, {
-        method: 'PATCH'
-    })
-    .then(response => response.json())
-    .then(updatedTask => {
-        // Update the task item on the UI immediately
-        var taskItem = checkbox.closest("li"); // Get the <li> element of the task
-        var taskTitle = taskItem.querySelector("span"); // Get the task title
-
-        // If task is completed, add the 'completed-task' class to strike-through the text
-        if (updatedTask.completed) {
-            taskTitle.classList.add("completed-task");
-        } else {
-            taskTitle.classList.remove("completed-task");
-        }
-
-        // Also update the checkbox state (it should already be updated automatically by the browser, but we can make sure)
-        checkbox.checked = updatedTask.completed;
-    })
-    .catch(error => {
-        console.error('Chyba při změně stavu úkolu:', error);
+    // Aktualizace aktivní třídy pro filtrování
+    document.querySelectorAll('.priority-bg').forEach(div => {
+        div.classList.remove('active');
     });
+
+    // Najdi a zvýrazni aktivní filtr
+    const activeDiv = {
+        'ALL': document.querySelector('.all-tasks'),
+        'HIGH': document.querySelector('.high-priority'),
+        'MEDIUM': document.querySelector('.medium-priority'),
+        'LOW': document.querySelector('.low-priority'),
+    }[filter];
+    if (activeDiv) activeDiv.classList.add('active');
+
+    // Načti úkoly podle aktuálního filtru
+    loadTasks();
+}
+function toggleTaskCompletion(taskId, checkbox) {
+    fetch(`/api/tasks/${taskId}/toggle`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                const taskTitle = checkbox.parentElement.querySelector('span');
+                if (checkbox.checked) {
+                    taskTitle.classList.add('completed-task');
+                } else {
+                    taskTitle.classList.remove('completed-task');
+                }
+            } else {
+                console.error('Chyba při aktualizaci stavu úkolu.');
+                checkbox.checked = !checkbox.checked; // Vrátí checkbox do původního stavu
+            }
+        })
+        .catch(error => {
+            console.error('Chyba při aktualizaci stavu úkolu:', error);
+            checkbox.checked = !checkbox.checked; // Vrátí checkbox do původního stavu
+        });
 }
 
 
-// Načítání úkolů při načtení stránky
-window.onload = loadTasks;
+
+
+function updateCounts(tasks) {
+    const allCount = tasks.length;
+    const highCount = tasks.filter(task => task.priority === 'HIGH').length;
+    const mediumCount = tasks.filter(task => task.priority === 'MEDIUM').length;
+    const lowCount = tasks.filter(task => task.priority === 'LOW').length;
+
+    document.getElementById('AllCount').textContent = allCount;
+    document.getElementById('highCount').textContent = highCount;
+    document.getElementById('mediumCount').textContent = mediumCount;
+    document.getElementById('lowCount').textContent = lowCount;
+}
+
+function loadTasks() {
+    let url = '/api/tasks';
+    if (currentFilter !== 'ALL') {
+        url += `/priority/${currentFilter}`;
+    }
+
+    fetch(url)
+        .then(response => response.json())
+        .then(tasks => {
+            // Aktualizace počtů
+            updateCounts(tasks);
+
+            // Vymazání a naplnění seznamu
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            tasks.forEach(task => {
+                const taskItem = document.createElement('li');
+                taskItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = task.completed;
+                checkbox.addEventListener('click', () => toggleTaskCompletion(task.id, checkbox));
+
+                const taskTitle = document.createElement('span');
+                taskTitle.textContent = `${task.title} - ${task.priority}`;
+                if (task.completed) taskTitle.classList.add('completed-task');
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'X';
+                deleteButton.classList.add('delete-btn');
+                deleteButton.addEventListener('click', () => deleteTask(task.id));
+
+                const taskContent = document.createElement('div');
+                taskContent.appendChild(checkbox);
+                taskContent.appendChild(taskTitle);
+
+                taskItem.appendChild(taskContent);
+                taskItem.appendChild(deleteButton);
+                taskList.appendChild(taskItem);
+            });
+        })
+        .catch(error => console.error('Chyba při načítání úkolů:', error));
+}
+
+// Načti úkoly při načtení stránky
+window.onload = () => filterTasks('ALL');

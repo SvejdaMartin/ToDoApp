@@ -1,11 +1,17 @@
 body {
     background: #3d3d49;
 }
+.priority-bg.active {
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
 .priority-bg{
     position: relative; /*Pseudo elements*/
     background-color:  #222228;
     color: white;
     border-radius: 15px;
+    cursor: pointer;
     text-align: left;
     margin-bottom: 15px;
     font-size: 20px;
@@ -52,10 +58,12 @@ body {
     padding: 10px;
 }
 .btn-color:hover {
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     background-color: none;
-    border-color : white;
     color: white;
     transform: scale(1.01);
+
 }
 .card{
     border: none;
