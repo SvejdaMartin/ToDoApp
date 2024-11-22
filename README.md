@@ -27,9 +27,9 @@ Feel free to fork this project, create issues, or submit pull requests. All cont
 Here are a few screenshots of the app in action:
 
 - **Mobile View**
-  ![Mobile View](path_to_your_mobile_image.png)
+  ![Mobile View](assets/images/mobileExample.png)
   
 - **Desktop View**
-  ![Desktop View](path_to_your_desktop_image.png)
+  ![Desktop View](assets/images/desktopExample.png)
 
 
