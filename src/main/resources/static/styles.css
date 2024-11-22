@@ -99,8 +99,24 @@ input[type="checkbox"]:checked {
 }
 .completed-task {
     text-decoration: line-through;
-    color: gray;
+    color: grey;
 }
+/*Delete X*/
+.delete-btn {
+  background-color: #212127;
+  color: gray;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.2rem;
+}
+.delete-btn:hover {
+  color: #ee4266;
+}
+
+
+
 
 
 

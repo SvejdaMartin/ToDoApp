@@ -90,9 +90,9 @@ function loadTasks() {
 
                 // Create delete button (křížek)
                 var deleteButton = document.createElement("button");
-                deleteButton.textContent = "❌"; // Symbol křížku
-                deleteButton.classList.add("btn", "btn-danger", "btn-sm");
-                deleteButton.style.marginLeft = "10px";
+                deleteButton.textContent = "X"; // Symbol křížku
+                deleteButton.classList.add("delete-btn");
+
                 deleteButton.addEventListener("click", function () {
                     deleteTask(task.id);
                 });
