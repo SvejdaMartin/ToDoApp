@@ -8,7 +8,7 @@ function addTask() {
     var taskPriority = document.getElementById("taskPriority").value;
 
     if (taskName && taskPriority) {
-        // Create object of the task
+        // Create an object of the task
         var newTask = {
             title: taskName,
             priority: taskPriority,
@@ -96,6 +96,7 @@ function filterTasks(filter) {
     // Načti úkoly podle aktuálního filtru
     loadTasks();
 }
+
 function toggleTaskCompletion(taskId, checkbox) {
     fetch(`/api/tasks/${taskId}/toggle`, {
         method: 'PATCH',
@@ -121,9 +122,6 @@ function toggleTaskCompletion(taskId, checkbox) {
             checkbox.checked = !checkbox.checked; // Vrátí checkbox do původního stavu
         });
 }
-
-
-
 
 function updateCounts(tasks) {
     const allCount = tasks.length;

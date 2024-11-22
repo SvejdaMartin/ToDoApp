@@ -63,7 +63,26 @@ body {
     background-color: none;
     color: white;
     transform: scale(1.01);
-
+}
+.card-header{
+    color: white;
+    font-size: 15px;
+    border-bottom: 1px solid grey;
+}
+.form-label{
+    color: white;
+    margin-top: .5rem;
+}
+.b-color{
+    background-color: #2a56b3;
+    color: white;
+}
+.b-color:hover{
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    background-color: none;
+    color: white;
+    transform: scale(1.01);
 }
 .card{
     border: none;
