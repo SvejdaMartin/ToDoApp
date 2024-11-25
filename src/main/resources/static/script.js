@@ -30,23 +30,22 @@ function addTask() {
             } else {
                 console.log('Úkol byl přidán:', task);
 
-                // Přidání úkolu na stránku
+                // Add Task
                 var taskList = document.getElementById("taskList");
                 var taskItem = document.createElement("li");
                 taskItem.classList.add("list-group-item");
 
-                // Opraveno: Použití `title` místo `name`
                 taskItem.textContent = `${task.title} - ${task.priority}`;
                 taskList.appendChild(taskItem);
 
-                // Vyprázdnit formulář
+                // Empty form
                 document.getElementById("taskName").value = '';
                 document.getElementById("taskPriority").value = 'HIGH';
 
-                // Skrýt formulář
+                // Hide Form
                 showTaskForm();
 
-                // Načíst všechny úkoly znovu a aktualizovat seznam
+                // Load all tasks
                 loadTasks();
             }
         })
@@ -56,12 +55,12 @@ function addTask() {
     }
 }
 
-// Mazání úkolu
+// Delete Task
 function deleteTask(taskId) {
-    // Potvrzení od uživatele
+    // Confirm from the user
     if (!confirm("Opravdu chcete tento úkol smazat?")) return;
 
-    // Pošle DELETE požadavek na backend
+    // Sent DELETE request on the backend
     fetch(`/api/tasks/${taskId}`, {
         method: 'DELETE'
     })
@@ -73,7 +72,7 @@ function deleteTask(taskId) {
             console.error('Chyba při mazání úkolu:', error);
         });
 }
-// Uchování aktuálního filtru
+// Current filter
 let currentFilter = 'ALL';
 
 function filterTasks(filter) {
