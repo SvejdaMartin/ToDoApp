@@ -66,7 +66,7 @@ function deleteTask(taskId) {
     })
         .then(() => {
             console.log(`Úkol s ID ${taskId} byl smazán.`);
-            loadTasks(); // Znovu načte seznam úkolů
+            loadTasks();
         })
         .catch(error => {
             console.error('Chyba při mazání úkolu:', error);
@@ -78,12 +78,10 @@ let currentFilter = 'ALL';
 function filterTasks(filter) {
     currentFilter = filter;
 
-    // Aktualizace aktivní třídy pro filtrování
     document.querySelectorAll('.priority-bg').forEach(div => {
         div.classList.remove('active');
     });
 
-    // Najdi a zvýrazni aktivní filtr
     const activeDiv = {
         'ALL': document.querySelector('.all-tasks'),
         'HIGH': document.querySelector('.high-priority'),
@@ -92,7 +90,7 @@ function filterTasks(filter) {
     }[filter];
     if (activeDiv) activeDiv.classList.add('active');
 
-    // Načti úkoly podle aktuálního filtru
+    // Load tasks
     loadTasks();
 }
 
@@ -118,7 +116,7 @@ function toggleTaskCompletion(taskId, checkbox) {
         })
         .catch(error => {
             console.error('Chyba při aktualizaci stavu úkolu:', error);
-            checkbox.checked = !checkbox.checked; // Vrátí checkbox do původního stavu
+            checkbox.checked = !checkbox.checked;
         });
 }
 
@@ -143,10 +141,10 @@ function loadTasks() {
     fetch(url)
         .then(response => response.json())
         .then(tasks => {
-            // Aktualizace počtů
+
             updateCounts(tasks);
 
-            // Vymazání a naplnění seznamu
+            // Delete and fill the list
             const taskList = document.getElementById('taskList');
             taskList.innerHTML = '';
             tasks.forEach(task => {
@@ -179,5 +177,5 @@ function loadTasks() {
         .catch(error => console.error('Chyba při načítání úkolů:', error));
 }
 
-// Načti úkoly při načtení stránky
+// Reload tasks (refresh the page)
 window.onload = () => filterTasks('ALL');

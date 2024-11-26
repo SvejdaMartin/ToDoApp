@@ -16,17 +16,14 @@ public class TaskController {
     public TaskController(TaskService taskService){
         this.taskService = taskService;
     }
-
     @GetMapping
     public List<Task> getAllTasks(){
         return taskService.getAllTasks();
     }
-
     @GetMapping("/priority/{priority}")
     public List<Task> getTasksByPriority(@PathVariable Priority priority){
         return taskService.getTaskByPriority(priority);
     }
-
     @GetMapping("/completed/{completed}")
     public List<Task> getTasksByCompletion(@PathVariable boolean completed){
         return taskService.getTasksByCompletion(completed);
