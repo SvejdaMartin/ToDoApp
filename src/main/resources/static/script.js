@@ -14,7 +14,6 @@ function addTask() {
             priority: taskPriority,
             completed: false
         };
-
         // Sending a request to the backend (POST)
         fetch('/api/tasks', {
             method: 'POST',
@@ -54,7 +53,6 @@ function addTask() {
         });
     }
 }
-
 // Delete Task
 function deleteTask(taskId) {
     // Confirm from the user
@@ -93,7 +91,6 @@ function filterTasks(filter) {
     // Load tasks
     loadTasks();
 }
-
 function toggleTaskCompletion(taskId, checkbox) {
     fetch(`/api/tasks/${taskId}/toggle`, {
         method: 'PATCH',
@@ -119,7 +116,6 @@ function toggleTaskCompletion(taskId, checkbox) {
             checkbox.checked = !checkbox.checked;
         });
 }
-
 function updateCounts(tasks) {
     const allCount = tasks.length;
     const highCount = tasks.filter(task => task.priority === 'HIGH').length;
@@ -131,7 +127,6 @@ function updateCounts(tasks) {
     document.getElementById('mediumCount').textContent = mediumCount;
     document.getElementById('lowCount').textContent = lowCount;
 }
-
 function loadTasks() {
     let url = '/api/tasks';
     if (currentFilter !== 'ALL') {
@@ -176,6 +171,5 @@ function loadTasks() {
         })
         .catch(error => console.error('Chyba při načítání úkolů:', error));
 }
-
 // Reload tasks (refresh the page)
 window.onload = () => filterTasks('ALL');
