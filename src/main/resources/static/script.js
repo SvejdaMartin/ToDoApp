@@ -75,7 +75,6 @@ let currentFilter = 'ALL';
 
 function filterTasks(filter) {
     currentFilter = filter;
-
     document.querySelectorAll('.priority-bg').forEach(div => {
         div.classList.remove('active');
     });
@@ -132,7 +131,6 @@ function loadTasks() {
     if (currentFilter !== 'ALL') {
         url += `/priority/${currentFilter}`;
     }
-
     fetch(url)
         .then(response => response.json())
         .then(tasks => {
