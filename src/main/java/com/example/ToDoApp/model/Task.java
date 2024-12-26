@@ -19,6 +19,7 @@ public class Task {
     private boolean completed;
 
     // Getters a setters
+
     public Long getId() {
         return id;
     }
