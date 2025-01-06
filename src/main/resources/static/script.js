@@ -25,9 +25,9 @@ function addTask() {
         .then(response => response.json())
         .then(task => {
             if (!task) {
-                console.error('Chyba: Úkol není vrácen zpět.');
+                console.error('Error: A task was not added.');
             } else {
-                console.log('Úkol byl přidán:', task);
+                console.log('A task was added:', task);
 
                 // Add Task
                 var taskList = document.getElementById("taskList");
@@ -49,25 +49,25 @@ function addTask() {
             }
         })
         .catch(error => {
-            console.error('Chyba při přidávání úkolu:', error);
+            console.error('Error during adding:', error);
         });
     }
 }
 // Delete Task
 function deleteTask(taskId) {
     // Confirm from the user
-    if (!confirm("Opravdu chcete tento úkol smazat?")) return;
+    if (!confirm("Do you really want to delete the task?")) return;
 
     // Sent DELETE request on the backend
     fetch(`/api/tasks/${taskId}`, {
         method: 'DELETE'
     })
         .then(() => {
-            console.log(`Úkol s ID ${taskId} byl smazán.`);
+            console.log(`Task ID ${taskId} was deleted.`);
             loadTasks();
         })
         .catch(error => {
-            console.error('Chyba při mazání úkolu:', error);
+            console.error('Error during deleting:', error);
         });
 }
 // Current filter
