@@ -106,12 +106,12 @@ function toggleTaskCompletion(taskId, checkbox) {
                     taskTitle.classList.remove('completed-task');
                 }
             } else {
-                console.error('Chyba při aktualizaci stavu úkolu.');
+                console.error('Error during the update of the task.');
                 checkbox.checked = !checkbox.checked; // Vrátí checkbox do původního stavu
             }
         })
         .catch(error => {
-            console.error('Chyba při aktualizaci stavu úkolu:', error);
+            console.error('Error during the update of the task.', error);
             checkbox.checked = !checkbox.checked;
         });
 }
