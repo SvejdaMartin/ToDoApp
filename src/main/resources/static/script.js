@@ -167,7 +167,7 @@ function loadTasks() {
                 taskList.appendChild(taskItem);
             });
         })
-        .catch(error => console.error('Error: tasks not updated', error));
+        .catch(error => console.error('Error: tasks are not updated', error));
 }
 // Reload tasks (refresh the page)
 window.onload = () => filterTasks('ALL');
