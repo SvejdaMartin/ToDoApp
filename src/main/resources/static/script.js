@@ -56,7 +56,7 @@ function addTask() {
 // Delete Task
 function deleteTask(taskId) {
     // Confirm from the user
-    if (!confirm("Do you really want to delete the task?")) return;
+    if (!confirm("Do you really want to delete the task ?")) return;
 
     // Sent DELETE request on the backend
     fetch(`/api/tasks/${taskId}`, {
@@ -67,7 +67,7 @@ function deleteTask(taskId) {
             loadTasks();
         })
         .catch(error => {
-            console.error('Error during deleting:', error);
+            console.error('Error during deleting :', error);
         });
 }
 // Current filter
